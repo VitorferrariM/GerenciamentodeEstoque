@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos Cadastrados</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #000000;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        img {
+            max-width: 100px; /* Ajusta a largura da imagem */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Produtos Cadastrados</h1>
+    </header>
+    <main>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Quantidade</th>
+                <th>Preço</th>
+                <th>Imagem</th>
+                <th>Ações</th> <!-- Coluna para ações -->
+            </tr>
+            {% for produto in produtos %}
+            <tr>
+                <td>{{ produto[0] }}</td>
+                <td>{{ produto[1] }}</td>
+                <td>{{ produto[2] }}</td>
+                <td>R$ {{ "%.2f"|format(produto[3]) }}</td> <!-- Formatação do preço -->
+                <td><img src="{{ url_for('static', filename='img/' + produto[4]) }}" alt="{{ produto[1] }}"></td>
+                <td>
+                    <form action="/excluir/{{ produto[0] }}" method="POST"> <!-- Supondo que o ID do produto é o primeiro elemento -->
+                        <button type="submit">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </main>
+</body>
+</html>
